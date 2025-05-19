@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('拉取代码') {
+            steps {
+                echo '通过流水线生成器生成脚本'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'SSH', url: 'git@github.com:dongpeng8/jenkins.git']])
+            }
+        }
+
+        stage('构建') {
+            steps {
+                echo '通过流水线生成器生成脚本 shell'
+                    sh 'mvn clean package'            }
+        }
+        stage('发布') {
+            steps {
+                echo '发布到tomcat'
+                   deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: '55d79b66-2a59-44a4-a27b-3d46d2665354', path: '', url: 'http://192.168.18.128:8080/')], contextPath: null, war: 'target/*.war'
+                              }
+        }
+    }
+}
