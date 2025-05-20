@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JenkinsDemoApplication {
 
 	// 入口
-
+	// 构建
 	public static void main(String[] args) {
 		SpringApplication.run(JenkinsDemoApplication.class, args);
 	}
